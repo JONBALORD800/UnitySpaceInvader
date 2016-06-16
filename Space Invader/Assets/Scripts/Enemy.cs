@@ -6,6 +6,9 @@ public class Enemy : MonoBehaviour {
     public int speed;
     public int lives=2;
     public GameObject laserPrefab;
+
+
+
     public float frequenceOfShootInseconds;
 
     private float frequenceOfShootPerSecond;
@@ -15,7 +18,8 @@ public class Enemy : MonoBehaviour {
     private Rigidbody2D _rb2D;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+	{
         frequenceOfShootPerSecond = 1 / frequenceOfShootInseconds;
         frequenceOfShootPerframe = frequenceOfShootPerSecond * Time.deltaTime;
 
@@ -32,7 +36,8 @@ public class Enemy : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
         if (Random.value < frequenceOfShootPerframe)
         {
             Shoot();
@@ -40,13 +45,13 @@ public class Enemy : MonoBehaviour {
 	
 	}
     void OnTriggerEnter2D(Collider2D col)
-    {
-        
+    {       
         Laser laserScript = col.GetComponent<Laser>();
         if (laserScript!=null)
         {
             print("OnTriggerEnter2D");
             GetDamage(laserScript.Damage);
+
         }
     }
 
@@ -63,4 +68,6 @@ public class Enemy : MonoBehaviour {
         GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;
         laser.transform.SetParent(_projectilesContainer.transform);
     }
+
+
 }
