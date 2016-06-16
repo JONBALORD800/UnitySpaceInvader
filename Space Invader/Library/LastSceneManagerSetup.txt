@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/_Scenes/01_GameScene.unity
+- path: Assets/_Scenes_Jonathan/01_GameScene_Jonathan.unity
   isLoaded: 1
   isActive: 1

@@ -6,8 +6,8 @@ public class Enemy : MonoBehaviour {
     public int speed;
     public int lives=2;
     public GameObject laserPrefab;
-
-
+	public AudioSource SoundEnnemie;
+	public AudioClip ExplosionE;
 
     public float frequenceOfShootInseconds;
 
@@ -60,14 +60,26 @@ public class Enemy : MonoBehaviour {
         lives-=damage;
         if (lives <= 0)
         {
-            GameObject.Destroy(this.gameObject);
+			StartCoroutine (TimeDied());
         }
     }
     private void Shoot()
     {
+		
         GameObject laser = Instantiate(laserPrefab, transform.position, Quaternion.identity) as GameObject;
         laser.transform.SetParent(_projectilesContainer.transform);
     }
 
+	IEnumerator TimeDied()
+	{
+		SoundEnnemie.PlayOneShot (ExplosionE,0.5f);
+		yield return new WaitForSeconds(1f);
+		GameObject.Destroy(this.gameObject);
+	}
+
+
 
 }
+
+
+

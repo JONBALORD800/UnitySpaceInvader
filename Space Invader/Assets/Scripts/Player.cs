@@ -6,6 +6,8 @@ public class Player : MonoBehaviour {
     public Vector3 direction;
 	public Transform Camera;
     public int speed;
+	public AudioSource Sound;
+	public AudioClip Explosion, FireLaser;
     public GameObject laserPreFab;
     public int lives = 3;
     public GameManager gMana;
@@ -31,11 +33,7 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () 
-	{
-		
-	
-
-			
+	{			
 		direction.x = Input.GetAxis("Horizontal");
 		direction.y = Input.GetAxis("Vertical");
 
@@ -66,6 +64,7 @@ public class Player : MonoBehaviour {
     }
     private void Shoot()
     {
+		Sound.PlayOneShot (FireLaser,0.5f);
         GameObject laser = Instantiate(laserPreFab, _transform.position, Quaternion.identity) as GameObject;
         laser.transform.SetParent(_projectilesContainer.transform, false);
     }
@@ -75,12 +74,14 @@ public class Player : MonoBehaviour {
 		StartCoroutine (TimeShake());
         if (lives <= 0)
         {
-            EndOfGame();
-            Destroy(this.gameObject);
+			Sound.PlayOneShot (Explosion,0.5f);
+			Invoke("EndOfGame",1f);
+           
         }
     }
     private void EndOfGame()
     {
+		Destroy(this.gameObject);
         gMana.EndGame();
     }
 	IEnumerator TimeShake() 
